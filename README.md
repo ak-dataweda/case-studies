@@ -21,6 +21,14 @@ End-to-end project documentation showcasing production-grade data systems built 
 
 ---
 
+## EU AI Act — Data Engineering Compliance Guide
+
+| | |
+|---|---|
+| [**EU AI Act Article 10: The Data Engineering Compliance Guide Nobody Wrote**](./09-eu-ai-act-data-engineering-guide.md) | A comprehensive, standalone guide covering Article 10 requirements mapped to engineering work, compliant pipeline architecture, quality gates, metric governance as legal requirement, the semantic layer as compliance infrastructure, agentic AI trust layers, audit preparation, the 90-day compliance playbook, and the Article 10 Data Readiness Checklist. Written for data engineers, not lawyers. |
+
+---
+
 ## How to Read These Case Studies
 
 Each case study follows a consistent structure:
