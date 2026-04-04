@@ -186,11 +186,21 @@ If I had to defend my training data in front of a regulator tomorrow, this is th
 
 ### Tooling I Would Actually Pick
 
-- **Warehouse:** Snowflake or BigQuery — both support robust SQL transformations and integration with dbt
-- **Transform:** dbt for modular pipelines, tests, and documentation generation
-- **Quality:** Great Expectations or native dbt tests plus anomaly monitors (Monte Carlo, Metaplane) for production drift
-- **Lineage:** OpenLineage-compatible orchestration (Airflow, Dagster) feeding DataHub or similar
-- **Semantic Layer:** dbt Metrics and/or Cube.dev so KPIs are not redefined in every BI tool and notebook
+I work across all four major cloud platforms. The compliance story is identical regardless of vendor — the shape matters more than the logo.
+
+| Layer | GCP | AWS | Azure | Cross-Cloud |
+|-------|-----|-----|-------|-------------|
+| **Warehouse / Lakehouse** | BigQuery | Redshift, S3 + Athena | Azure Synapse, Azure Databricks | Snowflake (runs on all three) |
+| **Ingestion / Orchestration** | Cloud Composer (Airflow) | AWS Glue, Step Functions, MWAA | Azure Data Factory, Azure Databricks Workflows | Airflow, Dagster |
+| **Transform** | dbt on BigQuery | dbt on Redshift/Glue | dbt on Databricks/Synapse | dbt (cloud-agnostic) |
+| **Quality** | dbt tests + GE | dbt tests + GE, AWS Glue DQ | dbt tests + GE, Azure Databricks expectations | Monte Carlo, Metaplane, Soda |
+| **Lineage & Catalog** | Dataplex, OpenLineage | AWS Glue Data Catalog, OpenLineage | Microsoft Purview, Unity Catalog | DataHub, OpenLineage |
+| **Semantic Layer** | dbt Metrics, Cube.dev | dbt Metrics, Cube.dev | dbt Metrics, Cube.dev | Cube.dev (cloud-agnostic) |
+| **Storage (exports)** | GCS | S3 | ADLS Gen2 | Versioned snapshots + manifests on any object store |
+
+**How I choose:** I pick based on the client's existing enterprise contracts, latency to source systems, and ecosystem maturity (e.g., OpenLineage support, orchestrator integration). Most enterprises are multi-cloud already — a manufacturing client might land OT data in Azure via Data Factory, transform in Databricks, and serve analytics from Snowflake. The Article 10 compliance architecture stays the same: time-travel or snapshot tables, object storage exports with checksums, and IAM that proves who could alter what.
+
+**Key principle:** The pipeline pattern is cloud-agnostic. What matters is that every layer produces **auditable artifacts** — lineage, test results, manifests, and versioned definitions — regardless of whether they run on GCP, AWS, or Azure.
 
 ---
 
