@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-The company distributed AI and security offerings through **partner channels** — including telecom carriers and device OEMs — alongside direct-to-consumer acquisition. A **lightweight free tier** was introduced for partner bundles to drive scale. **No analytics existed** for partner performance: leadership could not compare partner cohorts, measure engagement quality, or build an ROI narrative for renewal conversations. I designed **tracking dimensions**, **SQL segmentation logic** for acquisition channels, a **metric suite**, **three dashboard families**, and an end-to-end pipeline from landing data to executive-ready views. The outcome was **first-ever partner ROI reporting** and a **data-driven partner strategy** for the next fiscal cycle.
+The company distributed AI and security offerings through **partner channels** - including telecom carriers and device OEMs - alongside direct-to-consumer acquisition. A **lightweight free tier** was introduced for partner bundles to drive scale. **No analytics existed** for partner performance: leadership could not compare partner cohorts, measure engagement quality, or build an ROI narrative for renewal conversations. I designed **tracking dimensions**, **SQL segmentation logic** for acquisition channels, a **metric suite**, **three dashboard families**, and an end-to-end pipeline from landing data to executive-ready views. The outcome was **first-ever partner ROI reporting** and a **data-driven partner strategy** for the next fiscal cycle.
 
 ---
 
@@ -43,7 +43,7 @@ erDiagram
 
 ## SQL segmentation logic for acquisition channels
 
-A recurring analytics need was to segment users by **how they arrived** and **whether they carried subscription entitlement**. I implemented **explicit CASE logic** in the curated layer (conceptual pattern below — table names are illustrative only):
+A recurring analytics need was to segment users by **how they arrived** and **whether they carried subscription entitlement**. I implemented **explicit CASE logic** in the curated layer (conceptual pattern below - table names are illustrative only):
 
 ```sql
 -- Illustrative segmentation: partner / free vs partner / subscriber vs direct
@@ -70,7 +70,7 @@ FROM curated_user_daily_activity;
 
 **Design choices I enforced:**
 
-- **NULL partner** does not automatically mean direct — some builds omit partner metadata; I routed unknowns to `other_or_unclassified` until mapping improved.
+- **NULL partner** does not automatically mean direct - some builds omit partner metadata; I routed unknowns to `other_or_unclassified` until mapping improved.
 - **Tier enums** were aligned with billing reference data, not marketing labels that changed quarterly.
 - **One row per user per day** at the curated grain to prevent double-counting in dashboards.
 
@@ -85,8 +85,8 @@ I built a concise metric suite that partner managers and finance could interpret
 | **Partner active users** | Distinct users with meaningful product activity in period, attributed via partner dimensions |
 | **Lightweight adoption rate** | Share of partner-attributed installs or activations that engaged with the free tier within a defined window |
 | **Conversion rate** | Movement from lightweight free to paid or bundled paid states, with explicit lag windows |
-| **Engagement score** | Composite of session frequency, depth of feature use, and retention flags — tuned to avoid gaming by raw click volume |
-| **Partner scam / threat signal rate** | Incidence of relevant security events per active user for partners where product value is protection — expressed as a rate, not raw counts, for privacy scale |
+| **Engagement score** | Composite of session frequency, depth of feature use, and retention flags - tuned to avoid gaming by raw click volume |
+| **Partner scam / threat signal rate** | Incidence of relevant security events per active user for partners where product value is protection - expressed as a rate, not raw counts, for privacy scale |
 
 Each metric had a **footnote block** in the dashboard: population, window, and known exclusions.
 
@@ -111,7 +111,7 @@ I delivered **three dashboards** aimed at different decision speeds:
 ### 3. ROI
 
 - Partner-level cost inputs (where finance provided them) against active and converting users.
-- Simple payback framing suitable for executive slides — **directionally accurate**, not pretending precision the data could not support.
+- Simple payback framing suitable for executive slides - **directionally accurate**, not pretending precision the data could not support.
 - Scenario filters for fiscal quarters to align with planning cycles.
 
 ```mermaid
@@ -139,7 +139,7 @@ Partner telemetry followed the same enterprise pattern as other product analytic
                                       │
                                       ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  OBJECT STORAGE — LANDING                                                     │
+│  OBJECT STORAGE - LANDING                                                     │
 │  Daily partitions, schema validation, quarantine path for malformed batches   │
 └─────────────────────────────────────────────────────────────────────────────┘
                                       │
@@ -157,7 +157,7 @@ Partner telemetry followed the same enterprise pattern as other product analytic
                                       │
                                       ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  DASHBOARDS — Overview | Engagement | ROI                                    │
+│  DASHBOARDS - Overview | Engagement | ROI                                    │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -177,7 +177,7 @@ flowchart TB
 Partner data is inherently **messy**. I invested in:
 
 - **Effective-dated mappings** when partners changed IDs or consolidated programs.
-- **Unknown bucket transparency** — dashboards showed “unattributed” percentages instead of hiding gaps.
+- **Unknown bucket transparency** - dashboards showed “unattributed” percentages instead of hiding gaps.
 - **Reconciliation hooks** with finance for subscriber bridges so conversion metrics did not contradict billing.
 
 ---
@@ -185,8 +185,8 @@ Partner data is inherently **messy**. I invested in:
 ## Impact
 
 - **First-ever partner ROI reporting** suitable for executive and board-adjacent conversations (with honest confidence bands).
-- **Data-driven partner strategy** for the next fiscal year — which programs to expand, which to renegotiate, and where lightweight tier friction blocked conversion.
-- **Shared vocabulary** between product, finance, and partner sales — a prerequisite for any sophisticated co-marketing analytics.
+- **Data-driven partner strategy** for the next fiscal year - which programs to expand, which to renegotiate, and where lightweight tier friction blocked conversion.
+- **Shared vocabulary** between product, finance, and partner sales - a prerequisite for any sophisticated co-marketing analytics.
 
 ---
 
@@ -194,7 +194,7 @@ Partner data is inherently **messy**. I invested in:
 
 1. **Partner data is messy; plan for mapping tables as a first-class product**, not an afterthought.
 
-2. **Attribution requires clear definitions upfront.** I should have locked segmentation rules before the first dashboard screenshot circulated — retroactive relabeling always costs political capital.
+2. **Attribution requires clear definitions upfront.** I should have locked segmentation rules before the first dashboard screenshot circulated - retroactive relabeling always costs political capital.
 
 3. **Lightweight tiers need their own success metrics.** Volume without engagement misleads both sides of a partnership.
 

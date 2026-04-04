@@ -1,7 +1,7 @@
 # Data Observability for Executive-Grade Pipelines
 
 **Role:** Data engineer / observability owner  
-**Context:** A data organization running **30+ production pipelines** feeding **C-suite dashboards** discovered failures only when **executives reported stale charts**. There was **no centralized observability**—each team owned fragments of monitoring, and on-call engineers lacked a single pane of glass or consistent alert semantics.
+**Context:** A data organization running **30+ production pipelines** feeding **C-suite dashboards** discovered failures only when **executives reported stale charts**. There was **no centralized observability**-each team owned fragments of monitoring, and on-call engineers lacked a single pane of glass or consistent alert semantics.
 
 ---
 
@@ -22,9 +22,9 @@ I designed and implemented a **data observability layer** with **six standardize
 
 ## Design principles
 
-1. **Checks must be boring, comparable, and few**—not a hundred bespoke rules nobody maintains.  
+1. **Checks must be boring, comparable, and few**-not a hundred bespoke rules nobody maintains.  
 2. **Alerts must route by severity** and **wake people only when necessary**.  
-3. **History beats snapshots**—trending row counts and freshness build trust.  
+3. **History beats snapshots**-trending row counts and freshness build trust.  
 4. **Downstream impact** is part of the alert payload, not an afterthought.
 
 ---
@@ -104,7 +104,7 @@ flowchart LR
 
 ## Generic SQL example: freshness check
 
-The following uses **generic** relation names to illustrate the **pattern**—compare the latest loaded timestamp to the current time and to a business deadline:
+The following uses **generic** relation names to illustrate the **pattern**-compare the latest loaded timestamp to the current time and to a business deadline:
 
 ```sql
 -- Illustrative freshness check (adapt warehouse dialect as needed)
@@ -130,7 +130,7 @@ In production, the **deadline** and **window** were parameterized per dataset; *
 
 ## Key features delivered
 
-- **24/7 monitoring** across the pipeline fleet—not only “office hours” batch checks.  
+- **24/7 monitoring** across the pipeline fleet-not only “office hours” batch checks.  
 - **Intelligent alerting:** severity derived from SLA + **downstream consumer map** (which dashboards, which exec metrics).  
 - **Historical tracking:** row counts, freshness, failures, and cost stored for retrospectives and capacity planning.  
 - **Downstream impact mapping:** every critical alert included **who is affected** and **which assets** to communicate about.  
@@ -141,14 +141,14 @@ In production, the **deadline** and **window** were parameterized per dataset; *
 ## Operating model
 
 - **Owners per dataset:** named engineers responsible for thresholds and exceptions.  
-- **Runbooks:** for each P1 scenario—where to look first, how to backfill, who to notify.  
+- **Runbooks:** for each P1 scenario-where to look first, how to backfill, who to notify.  
 - **Weekly review:** P3 trends that might become P2 next week (cost creep, slowly lengthening freshness).
 
 ---
 
 ## Impact
 
-- **Zero surprise stale dashboards** relative to the prior reactive baseline—issues were detected and owned before executives opened their morning packs.  
+- **Zero surprise stale dashboards** relative to the prior reactive baseline-issues were detected and owned before executives opened their morning packs.  
 - **Mean time to repair reduced by ~70%** through faster routing, better context, and fewer duplicate investigations.  
 - **Production trust:** data became something the organization believed would be **there on time**, not “probably updated.”  
 - **Cost visibility:** finance and engineering could discuss tradeoffs with shared metrics.
@@ -157,7 +157,7 @@ In production, the **deadline** and **window** were parameterized per dataset; *
 
 ## Lessons learned
 
-1. **The best observability system is the one that lets humans sleep**—because noise is low and true emergencies are unmistakable.  
+1. **The best observability system is the one that lets humans sleep**-because noise is low and true emergencies are unmistakable.  
 2. **Data SLAs are contracts with stakeholders.** Writing them down ended endless debates about “how fresh is fresh enough.”  
 3. **Schema drift alerts feel noisy until the day they save you** from silently wrong revenue.  
 4. **Downstream impact in the alert body** is cheaper than cross-team chaos during an incident.
@@ -202,7 +202,7 @@ Publishing this catalog ended implicit arguments about whether a given failure �
 
 ## Generic incident narrative (composite)
 
-A failure mode we eliminated looked like this—**composite story**, not a single event:
+A failure mode we eliminated looked like this-**composite story**, not a single event:
 
 1. An upstream extract stalled overnight.  
 2. A daily mart still “succeeded” with **partial partitions**.  
@@ -224,7 +224,7 @@ Individual checks are weak alone; **correlation** is strong:
 
 - **Schema drift** + **row count drop** often indicates a **breaking upstream change**.  
 - **Cost spike** + **freshness lag** can indicate a **bad join** or **missing prune**.  
-- **Pipeline green** + **freshness red** catches **silent partial success**—the subtlest class of bug.
+- **Pipeline green** + **freshness red** catches **silent partial success**-the subtlest class of bug.
 
 I encoded lightweight **compound rules** so on-call engineers received **one coherent story** instead of three unrelated pages.
 
@@ -254,13 +254,13 @@ Observability without contracts devolves into whack-a-mole. I paired monitors wi
 - Allowed **null rates** for critical keys (where business rules permitted).  
 - Expected **load cadence** (daily vs hourly).
 
-When contracts lived in repo-reviewed artifacts, **schema drift alerts** were not surprises—they were **enforcement**.
+When contracts lived in repo-reviewed artifacts, **schema drift alerts** were not surprises-they were **enforcement**.
 
 ---
 
 ## Reflection
 
-Building this system felt like installing **smoke detectors** in a house that had only ever relied on “someone smelled smoke.” The technology was straightforward; the cultural shift—**owning SLAs explicitly**—was the durable win.
+Building this system felt like installing **smoke detectors** in a house that had only ever relied on “someone smelled smoke.” The technology was straightforward; the cultural shift-**owning SLAs explicitly**-was the durable win.
 
 ---
 

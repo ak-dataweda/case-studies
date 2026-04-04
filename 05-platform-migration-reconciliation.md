@@ -7,7 +7,7 @@
 
 ## Executive summary
 
-I owned the centralized data field mapping and reconciliation for a multi-year platform consolidation. Across five business domains, I mapped **190+ fields** from legacy sources through target schemas into executable migration logic. I built the governance artifacts—living mapping documentation, automated reconciliation, a reconciliation dashboard, and a multi-team signoff workflow—so that quality issues were visible, attributable, and closed before cutover.
+I owned the centralized data field mapping and reconciliation for a multi-year platform consolidation. Across five business domains, I mapped **190+ fields** from legacy sources through target schemas into executable migration logic. I built the governance artifacts-living mapping documentation, automated reconciliation, a reconciliation dashboard, and a multi-team signoff workflow-so that quality issues were visible, attributable, and closed before cutover.
 
 ---
 
@@ -37,7 +37,7 @@ Two platforms had evolved independently for years. Semantics diverged: the same 
 - **No one-to-one date mapping:** Effective start, end, grace periods, and trial windows did not share the same calendar semantics between systems. I documented every transformation (timezone normalization, inclusive vs exclusive bounds, “end of day” rules).
 
 ### Account
-- **Missing emails and weak identifiers:** A meaningful share of records lacked primary contact channels or had unstable keys. I defined **account association logic** to resolve null or ambiguous identifiers using conservative join paths and explicit fallbacks—never guessing beyond what the business approved.
+- **Missing emails and weak identifiers:** A meaningful share of records lacked primary contact channels or had unstable keys. I defined **account association logic** to resolve null or ambiguous identifiers using conservative join paths and explicit fallbacks-never guessing beyond what the business approved.
 
 ### Order
 - **Complex order status enums:** Dozens of legacy states had to collapse into a smaller target taxonomy without losing legal or financial meaning. I maintained a decision matrix and escalation path for ambiguous rows.
@@ -131,8 +131,8 @@ flowchart LR
 - **Centralized mapping document:** I maintained the living specification through **136+ revisions** as schemas, business rules, and cutover plans changed. Each field carried source definition, target definition, transform, owner, and validation status.
 - **Validation status tracking:** Every field and rule had a lifecycle (draft → reviewed → signed off → regression-tested), visible to all stakeholders.
 - **Reconciliation dashboard:** I surfaced exception counts, aging, and ownership so leadership could see migration health at a glance.
-- **Multi-team signoff workflow:** Data, product, finance, and engineering each had explicit approval gates for domains they owned—reducing “we thought someone else checked that” failures.
-- **Quality issue tracking:** Exceptions were tickets with severity, reproduction queries, and closure criteria—turning migration into a measurable quality program.
+- **Multi-team signoff workflow:** Data, product, finance, and engineering each had explicit approval gates for domains they owned-reducing “we thought someone else checked that” failures.
+- **Quality issue tracking:** Exceptions were tickets with severity, reproduction queries, and closure criteria-turning migration into a measurable quality program.
 
 ---
 
@@ -164,7 +164,7 @@ flowchart LR
 
 ## What I would do again
 
-I would invest even earlier in **automated regression** tied to the mapping document—so every schema or rule change re-ran a standard battery of reconciliation tests before humans spent time in meetings.
+I would invest even earlier in **automated regression** tied to the mapping document-so every schema or rule change re-ran a standard battery of reconciliation tests before humans spent time in meetings.
 
 ---
 
@@ -172,12 +172,12 @@ I would invest even earlier in **automated regression** tied to the mapping docu
 
 I treated the mapping document as a **shared contract**, not a private notebook. Core participants included:
 
-- **Engineering** — implementation of transforms, performance of bulk loads, environment promotion.  
-- **Product** — entitlement semantics, trial behavior, device limits, and customer-visible states.  
-- **Finance / order-to-cash** — revenue recognition adjacency, refund and chargeback flows.  
-- **Data platform** — staging standards, warehouse contracts, and reconciliation job scheduling.
+- **Engineering** - implementation of transforms, performance of bulk loads, environment promotion.  
+- **Product** - entitlement semantics, trial behavior, device limits, and customer-visible states.  
+- **Finance / order-to-cash** - revenue recognition adjacency, refund and chargeback flows.  
+- **Data platform** - staging standards, warehouse contracts, and reconciliation job scheduling.
 
-We ran a **weekly migration health review** driven by dashboard metrics: open exceptions, aging buckets, and signoff coverage by domain. When a domain stalled, we did not debate intuition—we opened the mapping row and asked: *what is the approved rule, who owns the decision, and what query proves it?*
+We ran a **weekly migration health review** driven by dashboard metrics: open exceptions, aging buckets, and signoff coverage by domain. When a domain stalled, we did not debate intuition-we opened the mapping row and asked: *what is the approved rule, who owns the decision, and what query proves it?*
 
 ---
 
@@ -193,7 +193,7 @@ This discipline turned “we fixed it in the spreadsheet” into “we fixed it 
 
 The product catalog spanned **tens of thousands of SKUs**. Seat validation compared **entitlement math** to **catalog expectations** and flagged mismatches for human triage. A **small fraction** was classified as **urgent** (ambiguous bundles, conflicting pack sizes, or known catalog cleanup in flight); the remainder followed a **standard remediation queue** with clear owners.
 
-I avoided one-off SQL patches for individual SKUs wherever possible—every recurring pattern became a **documented rule** or a **dictionary table** maintained by product operations.
+I avoided one-off SQL patches for individual SKUs wherever possible-every recurring pattern became a **documented rule** or a **dictionary table** maintained by product operations.
 
 ---
 
@@ -231,18 +231,18 @@ stateDiagram-v2
 
 I did not optimize for vanity counts; I tracked **signals that predicted cutover risk**:
 
-- **Exception trend** — are we converging week over week?  
-- **Signoff coverage** — are all high-risk fields past regression?  
-- **Aging** — which exceptions have sat without an owner?  
-- **Repeat offenders** — which transforms keep breaking under new source drops?
+- **Exception trend** - are we converging week over week?  
+- **Signoff coverage** - are all high-risk fields past regression?  
+- **Aging** - which exceptions have sat without an owner?  
+- **Repeat offenders** - which transforms keep breaking under new source drops?
 
-These metrics were **directional**—the goal was a **downward slope** in unexplained variance, not a single headline number.
+These metrics were **directional**-the goal was a **downward slope** in unexplained variance, not a single headline number.
 
 ---
 
 ## Reflection
 
-This program reminded me that **enterprise migrations are sociology as much as technology**. The mapping document was the **institutional memory** that kept distributed experts aligned. My proudest outcome was not a clever join—it was the moment product and engineering both pointed to the **same row** during a disagreement and resolved it in minutes instead of days.
+This program reminded me that **enterprise migrations are sociology as much as technology**. The mapping document was the **institutional memory** that kept distributed experts aligned. My proudest outcome was not a clever join-it was the moment product and engineering both pointed to the **same row** during a disagreement and resolved it in minutes instead of days.
 
 ---
 

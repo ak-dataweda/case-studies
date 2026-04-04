@@ -7,16 +7,16 @@
 
 ## Executive summary
 
-I designed and implemented **two complementary export pipelines**—one for accounts with **expired, inactive subscriptions**, and one for accounts with **zero subscriptions**—plus a **paranoid validation framework** that refused to ship if **any** still-active account appeared in an export. The result was a **fully automated, validated** compliance workflow: orchestration, generation, validation, exclusion handling, and notification to the compliance function—with **no leakage of active accounts** into deletion-bound datasets.
+I designed and implemented **two complementary export pipelines**-one for accounts with **expired, inactive subscriptions**, and one for accounts with **zero subscriptions**-plus a **paranoid validation framework** that refused to ship if **any** still-active account appeared in an export. The result was a **fully automated, validated** compliance workflow: orchestration, generation, validation, exclusion handling, and notification to the compliance function-with **no leakage of active accounts** into deletion-bound datasets.
 
 ---
 
 ## Regulatory and business constraints
 
-- **Inactivity** had to be defined consistently with legal interpretation and product reality—not merely “no login in 30 days.”  
+- **Inactivity** had to be defined consistently with legal interpretation and product reality-not merely “no login in 30 days.”  
 - A **36-month inactivity filter** anchored the eligibility window alongside subscription state.  
 - Certain **product lines** (e.g., free-tier, partner-managed, legacy bundles) required **explicit exclusion** from automated eligibility.  
-- **False positives**—marking an active subscriber or payer for deletion—were unacceptable; the validation philosophy was **conservative by default**.
+- **False positives**-marking an active subscriber or payer for deletion-were unacceptable; the validation philosophy was **conservative by default**.
 
 ---
 
@@ -28,7 +28,7 @@ Eligible accounts had subscriptions that were **inactive** under business rules,
 
 ### Pipeline B: Accounts with zero subscriptions
 
-Eligible accounts had **no** subscription rows in the entitlement system after association and delegate resolution—still subject to the same inactivity and exclusion rules.
+Eligible accounts had **no** subscription rows in the entitlement system after association and delegate resolution-still subject to the same inactivity and exclusion rules.
 
 Both pipelines shared **core resolution logic** so that identity and product attachment were interpreted identically regardless of subscription cardinality.
 
@@ -37,13 +37,13 @@ Both pipelines shared **core resolution logic** so that identity and product att
 ## ETL business logic (core building blocks)
 
 1. **Account association resolution**  
-   Where primary identifiers were null or fragmented, I used **approved lookup tables** and join paths to attach activity and subscription facts to a single account spine—without inventing identities.
+   Where primary identifiers were null or fragmented, I used **approved lookup tables** and join paths to attach activity and subscription facts to a single account spine-without inventing identities.
 
 2. **Delegate account resolution**  
    Where a payer, admin, or family delegate differed from the end user, I applied **role-aware rules** so subscription and activity signals attached to the correct legal entity for deletion eligibility.
 
 3. **Role-based product association**  
-   Product entitlements were attributed through roles (owner, member, beneficiary patterns—generalized here) so that “has a subscription” reflected real access, not a stray orphan row.
+   Product entitlements were attributed through roles (owner, member, beneficiary patterns-generalized here) so that “has a subscription” reflected real access, not a stray orphan row.
 
 4. **Inactive subscription calculation**  
    I used **window functions** to order subscription history, detect last active periods, and evaluate state transitions (active → lapsed → expired) in a deterministic way across overlapping rows.
@@ -57,7 +57,7 @@ Both pipelines shared **core resolution logic** so that identity and product att
 
 **Compliance ETL requires paranoid validation.**
 
-1. **Load the authoritative set of active accounts** (as defined by finance, product, and legal—e.g., currently billable or entitled).  
+1. **Load the authoritative set of active accounts** (as defined by finance, product, and legal-e.g., currently billable or entitled).  
 2. **Cross-validate** the export candidate list against that set.  
 3. If **any** intersection exists → **validation failed** → **auto-exclude** those accounts → **regenerate** the export.  
 4. Only after a clean run does the pipeline emit the final artifact and notify stakeholders.
@@ -136,7 +136,7 @@ Exclusions were **versioned** and **logged** so every run could answer: *which r
 
 - **Regulatory alignment:** Auditable definitions, repeatable runs, and clear artifacts for legal and privacy partners.  
 - **Zero active-account leakage** in production exports under the validation contract I implemented.  
-- **Full automation** with **human-in-the-loop** only where policy required—reducing manual spreadsheet risk.  
+- **Full automation** with **human-in-the-loop** only where policy required-reducing manual spreadsheet risk.  
 - **Operational confidence:** Fail-closed behavior meant incidents were **visible**, not subtle.
 
 ---
@@ -145,7 +145,7 @@ Exclusions were **versioned** and **logged** so every run could answer: *which r
 
 1. **False positives are career-ending in this domain.** I optimized for **blocking exports** over **shipping fast**.  
 2. **Compliance ETL is a product:** It needs SLAs, runbooks, ownership, and versioning like any customer-facing system.  
-3. **Window functions and careful joins are not “clever”—they are clarity tools** when you must explain eligibility row by row to an auditor.  
+3. **Window functions and careful joins are not “clever”-they are clarity tools** when you must explain eligibility row by row to an auditor.  
 4. **The hardest meetings are semantic, not technical.** “Inactive” is a word lawyers, product managers, and engineers define differently until you write it in SQL.
 
 ---
@@ -181,7 +181,7 @@ WHERE recency_rank = 1
 
 ## What I would strengthen next
 
-I would add **synthetic negative testing** in lower environments—seeded “trap” accounts that should never qualify—to catch logic regressions before they reach production.
+I would add **synthetic negative testing** in lower environments-seeded “trap” accounts that should never qualify-to catch logic regressions before they reach production.
 
 ---
 
@@ -189,10 +189,10 @@ I would add **synthetic negative testing** in lower environments—seeded “tra
 
 Every production run produced an **audit bundle** sufficient for privacy and legal review:
 
-- **Parameter snapshot** — inactivity window, run timestamp, environment, and exclusion list version.  
-- **Row counts** — candidates before validation, auto-excluded overlaps, final export cardinality.  
-- **Hash or checksum** (where policy allowed) — to prove artifact integrity between generation and handoff.  
-- **Approver identity** — who acknowledged receipt on the compliance side.
+- **Parameter snapshot** - inactivity window, run timestamp, environment, and exclusion list version.  
+- **Row counts** - candidates before validation, auto-excluded overlaps, final export cardinality.  
+- **Hash or checksum** (where policy allowed) - to prove artifact integrity between generation and handoff.  
+- **Approver identity** - who acknowledged receipt on the compliance side.
 
 I designed logging so an auditor could reconstruct **not only what shipped**, but **what almost shipped** and **why it was blocked**.
 
@@ -204,10 +204,10 @@ Exports contained identifiers governed by strict policy. I partnered with securi
 
 - **Least-privilege** service accounts for orchestration.  
 - **Encrypted** transit and at-rest storage in approved buckets or shares.  
-- **Time-bounded access** — credentials scoped to the job window.  
+- **Time-bounded access** - credentials scoped to the job window.  
 - **No local laptops** as a system of record; artifacts lived in governed storage with access reviews.
 
-The technical pattern is unremarkable—**which is the point**. Compliance systems should be boring and hard to misuse.
+The technical pattern is unremarkable-**which is the point**. Compliance systems should be boring and hard to misuse.
 
 ---
 
@@ -237,10 +237,10 @@ In practice, when `active_leakage_count > 0`, the pipeline **wrote those IDs to 
 
 I documented explicit **RACI** items:
 
-- **Data engineering** — pipeline correctness, performance, and validation logic.  
-- **Privacy / compliance** — interpretation of regulatory criteria and approval of exclusions.  
-- **Security** — access paths and encryption posture.  
-- **Product** — definitions of subscription states for edge offerings.
+- **Data engineering** - pipeline correctness, performance, and validation logic.  
+- **Privacy / compliance** - interpretation of regulatory criteria and approval of exclusions.  
+- **Security** - access paths and encryption posture.  
+- **Product** - definitions of subscription states for edge offerings.
 
 We aligned on **run windows** that respected downstream processing limits and **notification SLAs** so compliance teams were never left guessing whether a run succeeded.
 
@@ -254,13 +254,13 @@ A single monolithic export would have mixed **different eligibility stories** in
 - **Tune** performance (different join fan-out characteristics).  
 - **Test** each path with targeted synthetic fixtures.
 
-The shared kernel—association, delegates, exclusions—prevented **semantic drift** between the two outputs.
+The shared kernel-association, delegates, exclusions-prevented **semantic drift** between the two outputs.
 
 ---
 
 ## Reflection
 
-This work reinforced a simple rule I still use: **in compliance ETL, clarity is kindness**. When every join is documented and every failure mode fails closed, you sleep better—and your partners in legal and privacy trust the machinery.
+This work reinforced a simple rule I still use: **in compliance ETL, clarity is kindness**. When every join is documented and every failure mode fails closed, you sleep better-and your partners in legal and privacy trust the machinery.
 
 ---
 

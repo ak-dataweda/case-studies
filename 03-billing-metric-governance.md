@@ -2,13 +2,13 @@
 
 ## Executive summary
 
-A subscription-based software company relied on a **single billing health metric** that implicitly governed **multi-billion dollar renewal revenue** across **five consumer brands**. Finance, Payments, and Product each produced **a different number** for “the same” concept. Power BI reports slowed as teams pushed more logic through **XMLA**-heavy patterns. There was **no semantic layer** — business rules lived in scattered **DAX**, **SQL**, and **Excel**. I led the **metric taxonomy and target architecture** design: a **six-variant framework**, **denominator governance**, and a path to **Snowflake → Cube.dev semantic layer → REST API → BI tools** so the organization could finally agree on **one definition per decision type** and retire the “which number is right?” debates.
+A subscription-based software company relied on a **single billing health metric** that implicitly governed **multi-billion dollar renewal revenue** across **five consumer brands**. Finance, Payments, and Product each produced **a different number** for “the same” concept. Power BI reports slowed as teams pushed more logic through **XMLA**-heavy patterns. There was **no semantic layer** - business rules lived in scattered **DAX**, **SQL**, and **Excel**. I led the **metric taxonomy and target architecture** design: a **six-variant framework**, **denominator governance**, and a path to **Snowflake → Cube.dev semantic layer → REST API → BI tools** so the organization could finally agree on **one definition per decision type** and retire the “which number is right?” debates.
 
 ---
 
 ## The metric confusion problem
 
-Three major functions — **Finance**, **Payments**, and **Product** — each calculated billing health using locally convenient data sources and slightly different inclusion rules.
+Three major functions - **Finance**, **Payments**, and **Product** - each calculated billing health using locally convenient data sources and slightly different inclusion rules.
 
 | Symptom | What I observed |
 |--------|------------------|
@@ -17,7 +17,7 @@ Three major functions — **Finance**, **Payments**, and **Product** — each ca
 | Low trust in self-serve | Analysts re-derived metrics in notebooks because they did not believe dashboards |
 | Performance pain | Heavy semantic logic in client tools stressed refresh times and concurrency |
 
-The metric was not technically ambiguous — it was **politically and operationally unconstrained**. My job was to make the math **explicit**, the variants **named**, and the **denominators** impossible to confuse.
+The metric was not technically ambiguous - it was **politically and operationally unconstrained**. My job was to make the math **explicit**, the variants **named**, and the **denominators** impossible to confuse.
 
 ---
 
@@ -29,7 +29,7 @@ I treated this as a **symptom**, not the root cause: **business logic had no hom
 
 ---
 
-## No semantic layer — until we designed one
+## No semantic layer - until we designed one
 
 Before my architecture work, equivalent SQL fragments lived in:
 
@@ -48,12 +48,12 @@ I designed a **six-variant taxonomy** so each stakeholder could find “their”
 
 | Variant | Intent | Typical consumer |
 |---------|--------|------------------|
-| **Operational** | Raw operational throughput — what the billing systems attempted | Engineering / ops |
+| **Operational** | Raw operational throughput - what the billing systems attempted | Engineering / ops |
 | **Clean** | Successful completions after removing known noise / test traffic | Product analytics |
 | **First Attempt** | Outcomes on initial try without counting recovery paths | Customer experience teams |
 | **Cycle** | Behavior within a defined billing cycle window | Finance (accrual-aligned views) |
 | **Revenue-Weighted** | Health weighted by subscription value or segment | FP&A, exec reviews |
-| **Retry Efficiency** | Recovery success after failure — quality of remediation | Payments / risk |
+| **Retry Efficiency** | Recovery success after failure - quality of remediation | Payments / risk |
 
 Naming the variants ended half the arguments. The other half required **denominator governance**.
 
@@ -63,11 +63,11 @@ Naming the variants ended half the arguments. The other half required **denomina
 
 For each variant I documented:
 
-1. **Population** — which subscriptions, brands, and regions are in scope.
-2. **Time boundary** — calendar date versus billing cycle versus attempt timestamp.
-3. **Inclusion rules** — retries, chargebacks, pauses, grace periods.
-4. **Exclusion rules** — internal accounts, fraud holds, partner test tenants.
-5. **Grain** — per attempt, per subscription-day, per invoice, per cycle.
+1. **Population** - which subscriptions, brands, and regions are in scope.
+2. **Time boundary** - calendar date versus billing cycle versus attempt timestamp.
+3. **Inclusion rules** - retries, chargebacks, pauses, grace periods.
+4. **Exclusion rules** - internal accounts, fraud holds, partner test tenants.
+5. **Grain** - per attempt, per subscription-day, per invoice, per cycle.
 
 I published a **decision tree**: “If you are answering question X, use variant Y at grain Z.” That single artifact did more for alignment than months of ad hoc meetings.
 
@@ -107,7 +107,7 @@ flowchart TD
                                       ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │  BI TOOLS (Power BI, others)                                                 │
-│  Thin models — consume pre-defined measures                                   │
+│  Thin models - consume pre-defined measures                                   │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -175,16 +175,16 @@ cubes:
         sql: "CASE WHEN {CUBE}.status = 'SUCCESS' THEN {CUBE}.contract_value ELSE 0 END"
 ```
 
-The point of the YAML is not syntax trivia — it is **co-location of logic**, **reviewability in Git**, and **one API** for every consumer.
+The point of the YAML is not syntax trivia - it is **co-location of logic**, **reviewability in Git**, and **one API** for every consumer.
 
 ---
 
 ## Rollout strategy I advocated
 
-1. **Shadow period** — run new semantic measures parallel to legacy reports; log variance.
-2. **Executive sign-off** per variant — especially Revenue-Weighted and Cycle.
-3. **Deprecate DAX clones** — after parity, remove duplicate definitions from datasets.
-4. **Performance budget** — API p95 targets so dashboards stayed snappy without XMLA gymnastics.
+1. **Shadow period** - run new semantic measures parallel to legacy reports; log variance.
+2. **Executive sign-off** per variant - especially Revenue-Weighted and Cycle.
+3. **Deprecate DAX clones** - after parity, remove duplicate definitions from datasets.
+4. **Performance budget** - API p95 targets so dashboards stayed snappy without XMLA gymnastics.
 
 ---
 
@@ -212,7 +212,7 @@ The point of the YAML is not syntax trivia — it is **co-location of logic**, *
 
 ## What I would add in a greenfield program
 
-- **Metric RFC template** — one page per new measure: definition, owner, refresh SLA, known limitations.
+- **Metric RFC template** - one page per new measure: definition, owner, refresh SLA, known limitations.
 - **Automated contract tests** between Snowflake aggregates and Cube-exposed measures.
 - **Lineage visualization** from raw ingest to API field for auditors.
 
@@ -220,4 +220,4 @@ The point of the YAML is not syntax trivia — it is **co-location of logic**, *
 
 ## Closing
 
-This engagement sharpened my belief that **data platforms succeed when semantics are negotiable in the open and immutable in production.** I designed the taxonomy and architecture that made that possible for one of the most sensitive numbers in the company — and I would bring the same discipline to any organization where **trust is revenue-critical**.
+This engagement sharpened my belief that **data platforms succeed when semantics are negotiable in the open and immutable in production.** I designed the taxonomy and architecture that made that possible for one of the most sensitive numbers in the company - and I would bring the same discipline to any organization where **trust is revenue-critical**.

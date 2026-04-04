@@ -1,6 +1,6 @@
 # EU AI Act Article 10: The Data Engineering Compliance Guide Nobody Wrote
 
-**Author:** [Arjunkumar Kansagara](https://ak-dataweda.github.io/Portfolio/) — Data Engineer & AI-Ready Data Infrastructure Consultant, Germany  
+**Author:** [Arjunkumar Kansagara](https://ak-dataweda.github.io/Portfolio/) - Data Engineer & AI-Ready Data Infrastructure Consultant, Germany  
 **Last updated:** April 2026  
 **Reading time:** ~25 minutes
 
@@ -12,14 +12,14 @@
 
 1. [Why This Guide Exists](#why-this-guide-exists)
 2. [EU AI Act Timeline & What's at Stake](#eu-ai-act-timeline--whats-at-stake)
-3. [Article 10 — The Data Engineer's Scene](#article-10--the-data-engineers-scene)
+3. [Article 10 - The Data Engineer's Scene](#article-10--the-data-engineers-scene)
 4. [Mapping Article 10 to Engineering Work](#mapping-article-10-to-engineering-work)
 5. [Architecture: An Article 10-Compliant Data Pipeline](#architecture-an-article-10-compliant-data-pipeline)
 6. [Quality Gates & Pseudocode](#quality-gates--pseudocode)
 7. [Metric Governance Is Now a Legal Requirement](#metric-governance-is-now-a-legal-requirement)
 8. [The Semantic Layer as Compliance Infrastructure](#the-semantic-layer-as-compliance-infrastructure)
 9. [Agentic AI Needs a Trust Layer](#agentic-ai-needs-a-trust-layer)
-10. [The €35M Audit — What Regulators Will Check](#the-35m-audit--what-regulators-will-check)
+10. [The €35M Audit - What Regulators Will Check](#the-35m-audit--what-regulators-will-check)
 11. [German Manufacturing: The Biggest Compliance Market](#german-manufacturing-the-biggest-compliance-market)
 12. [90-Day Compliance Playbook for Data Teams](#90-day-compliance-playbook-for-data-teams)
 13. [I Audited My Own Platforms Against Article 10](#i-audited-my-own-platforms-against-article-10)
@@ -33,7 +33,7 @@
 
 When I first read Article 10 of the EU AI Act, my instinct was to skim it and forward it to legal. That was a mistake.
 
-Article 10 is not a privacy addendum or a vague "ethics" clause. It is a **specification for training, validation, and testing data** for high-risk AI systems. If you are the person who owns ingestion, transformation, quality, and consumption layers, you are on the hook for making those requirements true in production — not just "documented somewhere."
+Article 10 is not a privacy addendum or a vague "ethics" clause. It is a **specification for training, validation, and testing data** for high-risk AI systems. If you are the person who owns ingestion, transformation, quality, and consumption layers, you are on the hook for making those requirements true in production - not just "documented somewhere."
 
 Here's the problem: **nobody is writing about the EU AI Act from the data engineering perspective.** Lawyers write about it. AI researchers write about it. Policy people write about it. But nobody is saying "here's how to actually BUILD the data infrastructure that makes your AI compliant."
 
@@ -45,7 +45,7 @@ This guide fills that gap.
 
 ### The Deadline
 
-The EU AI Act entered into force on August 1, 2024. The main obligations for high-risk AI systems apply from **August 2, 2026**. That's not an abstract date on a slide deck — it's when companies placing high-risk AI on the EU market need to demonstrate compliance.
+The EU AI Act entered into force on August 1, 2024. The main obligations for high-risk AI systems apply from **August 2, 2026**. That's not an abstract date on a slide deck - it's when companies placing high-risk AI on the EU market need to demonstrate compliance.
 
 ### The Fines
 
@@ -61,7 +61,7 @@ These are not rounding errors for any company shipping AI into the EU.
 
 - **Providers** placing AI systems on the EU market
 - **Deployers** using AI systems in the EU
-- **Anyone whose data work enables those systems** — that's us
+- **Anyone whose data work enables those systems** - that's us
 
 ### The Blind Spot
 
@@ -69,19 +69,19 @@ What I'm seeing across DACH:
 
 - Teams are racing on model cards, guardrails, and vendor demos
 - Almost nobody is hardening the **data layer** the model actually learned from
-- Lineage, representativeness, error baselines — still "Phase 2"
+- Lineage, representativeness, error baselines - still "Phase 2"
 
 The data stack is the blind spot. Models get the spotlight. Pipelines get ignored until an auditor asks a question nobody can answer in one sentence.
 
 ---
 
-## Article 10 — The Data Engineer's Scene
+## Article 10 - The Data Engineer's Scene
 
 Article 10 is the data engineer's scene. It requires that training, validation, and testing data sets for high-risk AI are:
 
 - **Relevant and representative** of the intended purpose and target population
 - **Free of errors** and **complete** to the extent appropriate for the intended purpose
-- **Statistically sound** where biases could affect health, safety, or fundamental rights — with possible need for bias identification and mitigation
+- **Statistically sound** where biases could affect health, safety, or fundamental rights - with possible need for bias identification and mitigation
 - **Documented** with regard to **origin**, **preparation**, **labelling** (if applicable), **assumptions**, **limitations**, and **gaps**
 
 The legal text uses words like "appropriate" and "to the extent possible." In practice, regulators and notified bodies will ask: **What did you do, how did you prove it, and can you reproduce it?**
@@ -119,11 +119,11 @@ Each Article 10 requirement maps directly to data engineering work:
 | Documentation of gaps | Known limitations, missing dimensions, temporal holes |
 | Labelling (if applicable) | Label provenance, inter-rater agreement, guideline versioning |
 
-**If your ML team trains models in notebooks while the "real" business data lives in Snowflake or BigQuery with a different definition of "customer" or "defect," you already have a compliance gap** — not because the model is bad, but because the evidentiary chain is broken.
+**If your ML team trains models in notebooks while the "real" business data lives in Snowflake or BigQuery with a different definition of "customer" or "defect," you already have a compliance gap** - not because the model is bad, but because the evidentiary chain is broken.
 
 ### Labelling Deserves Special Attention
 
-Many high-risk systems in industry are supervised — humans mark defects, approve loans, classify documents. From an engineering standpoint, labels are **data products** with their own error rates, inter-rater disagreement, rework rules, and temporal drift ("we tightened the standard in 2024").
+Many high-risk systems in industry are supervised - humans mark defects, approve loans, classify documents. From an engineering standpoint, labels are **data products** with their own error rates, inter-rater disagreement, rework rules, and temporal drift ("we tightened the standard in 2024").
 
 If your pipeline treats labels as ground truth without provenance, you are one uncomfortable question away from a crisis: *Who labeled this, with which instructions, and did those instructions change?*
 
@@ -177,16 +177,16 @@ If I had to defend my training data in front of a regulator tomorrow, this is th
 
 | Pipeline Layer | Article 10 Requirement |
 |---------------|----------------------|
-| Sources → Ingestion | **Origin** evidence starts here — which systems, which contracts, which refresh SLAs |
+| Sources → Ingestion | **Origin** evidence starts here - which systems, which contracts, which refresh SLAs |
 | Integration (dbt/SQL) | **Preparation** is code. Assumptions become versioned and reviewable |
-| Quality Gates | **Errors, completeness, statistical soundness** — automated, logged, retained |
+| Quality Gates | **Errors, completeness, statistical soundness** - automated, logged, retained |
 | Lineage & Catalog | **Traceability** from business definition to exported feature/label tables |
 | Semantic / Metrics Layer | **Definitions** that match what the business thinks "defect rate" means |
-| Model-Ready Exports | Frozen snapshots with **hashes and manifests** — "what we trained on" is unambiguous |
+| Model-Ready Exports | Frozen snapshots with **hashes and manifests** - "what we trained on" is unambiguous |
 
 ### Tooling I Would Actually Pick
 
-I work across all four major cloud platforms. The compliance story is identical regardless of vendor — the shape matters more than the logo.
+I work across all four major cloud platforms. The compliance story is identical regardless of vendor - the shape matters more than the logo.
 
 | Layer | GCP | AWS | Azure | Cross-Cloud |
 |-------|-----|-----|-------|-------------|
@@ -198,9 +198,9 @@ I work across all four major cloud platforms. The compliance story is identical 
 | **Semantic Layer** | dbt Metrics, Cube.dev | dbt Metrics, Cube.dev | dbt Metrics, Cube.dev | Cube.dev (cloud-agnostic) |
 | **Storage (exports)** | GCS | S3 | ADLS Gen2 | Versioned snapshots + manifests on any object store |
 
-**How I choose:** I pick based on the client's existing enterprise contracts, latency to source systems, and ecosystem maturity (e.g., OpenLineage support, orchestrator integration). Most enterprises are multi-cloud already — a manufacturing client might land OT data in Azure via Data Factory, transform in Databricks, and serve analytics from Snowflake. The Article 10 compliance architecture stays the same: time-travel or snapshot tables, object storage exports with checksums, and IAM that proves who could alter what.
+**How I choose:** I pick based on the client's existing enterprise contracts, latency to source systems, and ecosystem maturity (e.g., OpenLineage support, orchestrator integration). Most enterprises are multi-cloud already - a manufacturing client might land OT data in Azure via Data Factory, transform in Databricks, and serve analytics from Snowflake. The Article 10 compliance architecture stays the same: time-travel or snapshot tables, object storage exports with checksums, and IAM that proves who could alter what.
 
-**Key principle:** The pipeline pattern is cloud-agnostic. What matters is that every layer produces **auditable artifacts** — lineage, test results, manifests, and versioned definitions — regardless of whether they run on GCP, AWS, or Azure.
+**Key principle:** The pipeline pattern is cloud-agnostic. What matters is that every layer produces **auditable artifacts** - lineage, test results, manifests, and versioned definitions - regardless of whether they run on GCP, AWS, or Azure.
 
 ---
 
@@ -245,7 +245,7 @@ write_manifest(
 )
 ```
 
-You would implement this with Great Expectations, dbt tests, custom SQL assertions, or data observability tools — the Act does not prescribe tooling; it prescribes **outcomes**.
+You would implement this with Great Expectations, dbt tests, custom SQL assertions, or data observability tools - the Act does not prescribe tooling; it prescribes **outcomes**.
 
 ### The Quality Scorecard
 
@@ -277,15 +277,15 @@ I use TRUST as a shorthand for how I structure governance work with teams:
 
 | TRUST Pillar | What It Is | Article 10(2) Link |
 |-------------|-----------|-------------------|
-| **T — Traceable** | Every metric/label has a documented path from source to consumption | Preparation processes & origin |
-| **R — Reviewed** | Definitions pass business + technical review; changes are versioned | Documented assumptions & accountability |
-| **U — Understood Limits** | Known gaps, proxies, and exclusions are explicit | Gap identification |
-| **S — Stable Interfaces** | Semantic layer / metrics APIs reduce ad-hoc redefinition | Consistent preparation for training vs. ops |
-| **T — Tested** | Automated checks + monitoring on the metrics that matter | Error/completeness & ongoing validity |
+| **T - Traceable** | Every metric/label has a documented path from source to consumption | Preparation processes & origin |
+| **R - Reviewed** | Definitions pass business + technical review; changes are versioned | Documented assumptions & accountability |
+| **U - Understood Limits** | Known gaps, proxies, and exclusions are explicit | Gap identification |
+| **S - Stable Interfaces** | Semantic layer / metrics APIs reduce ad-hoc redefinition | Consistent preparation for training vs. ops |
+| **T - Tested** | Automated checks + monitoring on the metrics that matter | Error/completeness & ongoing validity |
 
 ### Worked Example
 
-Suppose "OEE" (overall equipment effectiveness) feeds a scheduling recommender. If operations change how planned downtime is classified, the metric moves — silently — unless you have Reviewed change control. If the recommender's training data still uses last quarter's definition while production dashboards use the new one, your model is optimizing a ghost KPI.
+Suppose "OEE" (overall equipment effectiveness) feeds a scheduling recommender. If operations change how planned downtime is classified, the metric moves - silently - unless you have Reviewed change control. If the recommender's training data still uses last quarter's definition while production dashboards use the new one, your model is optimizing a ghost KPI.
 
 TRUST is not paperwork; it is preventing silent divergence between human and machine decisions.
 
@@ -293,7 +293,7 @@ TRUST is not paperwork; it is preventing silent divergence between human and mac
 
 ## The Semantic Layer as Compliance Infrastructure
 
-The semantic layer was marketed as governance for BI consistency. The subplot, especially under the EU AI Act, is **compliance infrastructure**: a stable, versionable interface between raw tables and every downstream consumer — including models and agents.
+The semantic layer was marketed as governance for BI consistency. The subplot, especially under the EU AI Act, is **compliance infrastructure**: a stable, versionable interface between raw tables and every downstream consumer - including models and agents.
 
 ### Without vs. With a Semantic Layer
 
@@ -348,13 +348,13 @@ These snippets are not magic compliance buttons. They are **evidence-friendly**:
 
 ### CI/CD for Meaning
 
-Treat semantic YAML like application code: pull requests, required reviewers, staging environments for breaking changes. When a metric changes, your pipeline should surface downstream consumers — especially ML feature views — so you do not "improve analytics" while silently retraining on a shifted target.
+Treat semantic YAML like application code: pull requests, required reviewers, staging environments for breaking changes. When a metric changes, your pipeline should surface downstream consumers - especially ML feature views - so you do not "improve analytics" while silently retraining on a shifted target.
 
 ---
 
 ## Agentic AI Needs a Trust Layer
 
-Agentic AI is the current hype cycle. Under the hype is a boring truth: an agent is only as safe as the signals it reads and the actions it is allowed to take. If those signals are wrong, stale, or inconsistently defined, autonomy does not multiply value — it multiplies incidents.
+Agentic AI is the current hype cycle. Under the hype is a boring truth: an agent is only as safe as the signals it reads and the actions it is allowed to take. If those signals are wrong, stale, or inconsistently defined, autonomy does not multiply value - it multiplies incidents.
 
 ### Why Agents Break Faster Than Dashboards
 
@@ -383,16 +383,16 @@ Dashboards embarrass you in a meeting. Agents can trigger workflows: file ticket
 
 **The four pillars:**
 
-1. **Semantic Layer (meaning)** — Agents consume approved metrics, not freestyle SQL
-2. **Data Quality (correctness)** — Blocking checks on freshness, volume, uniqueness
-3. **Observability (behavior over time)** — Drift, anomaly detection, run history
-4. **Governance (who may do what)** — RBAC on semantic views, PII policies, tool allow-lists
+1. **Semantic Layer (meaning)** - Agents consume approved metrics, not freestyle SQL
+2. **Data Quality (correctness)** - Blocking checks on freshness, volume, uniqueness
+3. **Observability (behavior over time)** - Drift, anomaly detection, run history
+4. **Governance (who may do what)** - RBAC on semantic views, PII policies, tool allow-lists
 
 For high-risk systems, regulators will not care whether your automation was "an agent" or "a script." They will care whether data for training and operation is documented, appropriate, and controlled. A trust layer is how you operationalize those requirements.
 
 ---
 
-## The €35M Audit — What Regulators Will Check
+## The €35M Audit - What Regulators Will Check
 
 Everyone quotes penalty ranges. I am less interested in the ceiling than in the mechanism: competent authorities will ask for **evidence**. The expensive failures will not be "we were evil." They will be "we could not demonstrate what we did with data."
 
@@ -412,11 +412,11 @@ A high-risk AI system is deployed in an industrial quality context (vision + sen
 
 ### Common Failure Modes
 
-1. **No lineage** — The model was trained on "a CSV from 2022" with no path back to operational truth
-2. **Undocumented assumptions** — "We removed outliers" — how, why, and with what side effects on minority cases?
-3. **No bias testing narrative** — Not "no tests," but no coherent story tied to deployment context
-4. **Inconsistent metrics** — Finance's "defect" ≠ MES's "defect" ≠ the label in the training table
-5. **Tribal knowledge** — Only one data scientist knows how labels were cleaned — and they switched jobs
+1. **No lineage** - The model was trained on "a CSV from 2022" with no path back to operational truth
+2. **Undocumented assumptions** - "We removed outliers" - how, why, and with what side effects on minority cases?
+3. **No bias testing narrative** - Not "no tests," but no coherent story tied to deployment context
+4. **Inconsistent metrics** - Finance's "defect" ≠ MES's "defect" ≠ the label in the training table
+5. **Tribal knowledge** - Only one data scientist knows how labels were cleaned - and they switched jobs
 
 ### The Reconstruction Drill
 
@@ -428,7 +428,7 @@ Record the drill like an incident postmortem: time to reconstruct, tools used, m
 
 ## German Manufacturing: The Biggest Compliance Market
 
-I live and work in Germany. When people talk about AI regulation, they often picture chatbots and foundation models. On the ground in DACH manufacturing, the more urgent story is: **high-risk AI** embedded in inspection, predictive maintenance, scheduling, and automated decisions — systems where bad data is not a bad recommendation but scrap, downtime, or harm.
+I live and work in Germany. When people talk about AI regulation, they often picture chatbots and foundation models. On the ground in DACH manufacturing, the more urgent story is: **high-risk AI** embedded in inspection, predictive maintenance, scheduling, and automated decisions - systems where bad data is not a bad recommendation but scrap, downtime, or harm.
 
 ### Density of High-Risk Use Cases
 
@@ -448,7 +448,7 @@ Industrie 4.0 accelerated sensorization, connectivity, and analytics. It did **n
 
 ### The Opportunity
 
-Germany has thousands of manufacturing firms with serious digital footprints — from Mittelstand suppliers to global OEMs. Even if only a fraction deploy high-risk AI in the regulatory sense, that fraction still implies hundreds to thousands of systems needing audit-grade data practices.
+Germany has thousands of manufacturing firms with serious digital footprints - from Mittelstand suppliers to global OEMs. Even if only a fraction deploy high-risk AI in the regulatory sense, that fraction still implies hundreds to thousands of systems needing audit-grade data practices.
 
 **The bottleneck is not willingness to "do AI." It is trustworthy data infrastructure at scale.**
 
@@ -458,7 +458,7 @@ Most manufacturers have excellent engineering culture but zero data governance i
 
 ## 90-Day Compliance Playbook for Data Teams
 
-When a team realizes their high-risk AI story is strong in demos and weak in data evidence, I use a 90-day playbook. The goal is not perfection — it is credible momentum and a repeatable template.
+When a team realizes their high-risk AI story is strong in demos and weak in data evidence, I use a 90-day playbook. The goal is not perfection - it is credible momentum and a repeatable template.
 
 ### Roles You Need
 
@@ -468,7 +468,7 @@ When a team realizes their high-risk AI story is strong in demos and weak in dat
 - **Legal/risk:** interprets obligations and interfaces with authorities
 - **PM / program:** keeps the evidence pack coherent
 
-### Phase 1: Weeks 1-2 — Audit (Inventory Reality)
+### Phase 1: Weeks 1-2 - Audit (Inventory Reality)
 
 **Deliverables:** Data map, model inventory, "evidence gap" list
 
@@ -478,7 +478,7 @@ When a team realizes their high-risk AI story is strong in demos and weak in dat
 - Run the one-day reconstruction drill
 - Exit with a single-page heat map of risk
 
-### Phase 2: Weeks 3-4 — Gaps (Prioritize Brutally)
+### Phase 2: Weeks 3-4 - Gaps (Prioritize Brutally)
 
 **Deliverables:** Prioritized backlog with owners; risk register
 
@@ -490,7 +490,7 @@ When a team realizes their high-risk AI story is strong in demos and weak in dat
 
 **Prioritization rule:** Fix traceability and snapshots before you polish narratives. A beautiful limitations memo on top of mystery exports is still weak evidence.
 
-### Phase 3: Weeks 5-8 — Build (Make Compliance Ordinary)
+### Phase 3: Weeks 5-8 - Build (Make Compliance Ordinary)
 
 **Deliverables:** Automated tests, snapshot manifests, semantic definitions, evaluation slice policy
 
@@ -502,7 +502,7 @@ When a team realizes their high-risk AI story is strong in demos and weak in dat
 
 **Cadence:** Two-week sprints with demos showing artifacts (manifest, test report, catalog page), not just "we refactored SQL."
 
-### Phase 4: Weeks 9-12 — Validate (Pretend It's Real)
+### Phase 4: Weeks 9-12 - Validate (Pretend It's Real)
 
 **Deliverables:** Mock audit pack, remediation tickets, executive summary
 
@@ -544,23 +544,23 @@ I preach audit-ready data for clients. So I decided to hold myself to the same s
 
 | Article 10 Theme | What Was Already Strong | What Needed Work |
 |-----------------|----------------------|-----------------|
-| **Representativeness** | Clear cohort SQL, documented exclusions | "Production-like" data was convenient rather than demonstrably representative — known skew wasn't written down |
+| **Representativeness** | Clear cohort SQL, documented exclusions | "Production-like" data was convenient rather than demonstrably representative - known skew wasn't written down |
 | **Errors & completeness** | dbt tests on keys and not-null fields; reconciliation reports | Label noise treated as "model robustness," not a documented limitation with quantified impact |
 | **Bias & statistical soundness** | Some slice evaluations existed; performance by product family | Slices were ad-hoc, not tied to a policy. Ad-hoc looks evasive in hindsight |
-| **Documentation** | Version control for transformations; decent README culture | Assumptions lived in tickets and Slack — retrievable, but not packaged as a coherent narrative |
+| **Documentation** | Version control for transformations; decent README culture | Assumptions lived in tickets and Slack - retrievable, but not packaged as a coherent narrative |
 
 ### The Headline Number
 
-If I compress everything into one uncomfortable metric: most production data platforms I have touched were **maybe 60% "compliant in spirit"** — solid engineering, partial paperwork. The missing 40% was not fancy ML; it was discipline around evidence: slice policies, limitation memos, immutable snapshots, and boring sign-offs.
+If I compress everything into one uncomfortable metric: most production data platforms I have touched were **maybe 60% "compliant in spirit"** - solid engineering, partial paperwork. The missing 40% was not fancy ML; it was discipline around evidence: slice policies, limitation memos, immutable snapshots, and boring sign-offs.
 
 ### What I Would Do Differently on Day One
 
-- Bundle assumptions into a living doc linked from the repo root — not "we will write it later"
-- Name slice policies before the first serious model review — even if the list is short
+- Bundle assumptions into a living doc linked from the repo root - not "we will write it later"
+- Name slice policies before the first serious model review - even if the list is short
 - Treat label guidelines as a versioned artifact next to the labeling UI spec
 - Run the reconstruction drill at milestone zero, not when a client asks a scary question
 
-**Your platform is probably closer than you think — and the last mile is not more Kubernetes, it is more discipline around what you already built.**
+**Your platform is probably closer than you think - and the last mile is not more Kubernetes, it is more discipline around what you already built.**
 
 ---
 
@@ -629,7 +629,7 @@ The EU AI Act is creating a new role: someone who combines data engineering + go
 - Lineage & metadata (OpenLineage, catalog patterns)
 - Testing strategy (dbt, Great Expectations, contract tests)
 - Semantic modeling (metrics layers, slowly changing dimensions for labels)
-- Risk communication — translating engineering facts into executive memos without dilution
+- Risk communication - translating engineering facts into executive memos without dilution
 
 ### Rate Implications (German Market)
 
@@ -645,7 +645,7 @@ The gap: most data engineers position as "pipeline builders" instead of "data tr
 
 ## About the Author
 
-**Arjunkumar Kansagara** — Data Engineer & AI-Ready Data Infrastructure Consultant based in Germany.
+**Arjunkumar Kansagara** - Data Engineer & AI-Ready Data Infrastructure Consultant based in Germany.
 
 I build data systems that organizations can actually trust. I specialize in metric governance, data platform architecture, and AI-driven analytics with deep expertise in EU regulatory compliance (GDPR, EU AI Act, DORA).
 
@@ -653,14 +653,14 @@ I build data systems that organizations can actually trust. I specialize in metr
 
 ### My Approach: The TRUST Framework
 
-**T**ransparency, **R**egulation, **U**nified Metrics, **S**ystematic Validation, and **T**ransfer — transforming data teams from service functions into strategic business partners.
+**T**ransparency, **R**egulation, **U**nified Metrics, **S**ystematic Validation, and **T**ransfer - transforming data teams from service functions into strategic business partners.
 
 ### What I Offer
 
-- **Article 10 Data Readiness Audit** — 6-8 week fixed-scope engagement
-- **Metric Governance Frameworks** — semantic layer + quality + documentation
-- **AI-Ready Data Infrastructure** — Snowflake, GCP, BigQuery, dbt, Cube.dev
-- **Data Trust Architecture** — lineage, observability, compliance evidence packs
+- **Article 10 Data Readiness Audit** - 6-8 week fixed-scope engagement
+- **Metric Governance Frameworks** - semantic layer + quality + documentation
+- **AI-Ready Data Infrastructure** - Snowflake, GCP, BigQuery, dbt, Cube.dev
+- **Data Trust Architecture** - lineage, observability, compliance evidence packs
 
 ### Get in Touch
 

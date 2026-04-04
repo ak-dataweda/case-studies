@@ -10,7 +10,7 @@ I served as the end-to-end data platform owner when a global cybersecurity compa
 
 ## Context and constraints
 
-The organization operates at consumer scale — **tens of millions of users** globally and **multi-billion dollar revenue** — which meant every design choice had to scale financially and operationally. Legal and security teams were sensitive to long-lived storage of user-derived content. Engineering shipped client and backend changes on aggressive cadences, so the data layer could not assume a frozen JSON contract.
+The organization operates at consumer scale - **tens of millions of users** globally and **multi-billion dollar revenue** - which meant every design choice had to scale financially and operationally. Legal and security teams were sensitive to long-lived storage of user-derived content. Engineering shipped client and backend changes on aggressive cadences, so the data layer could not assume a frozen JSON contract.
 
 I positioned the platform as **opinionated but extensible:** strict enough for privacy-adjacent governance, flexible enough to absorb new event types without a multi-week warehouse migration for every release.
 
@@ -92,7 +92,7 @@ I prioritized **idempotent daily loads**, clear partition keys, and automated ch
 
 ### Orchestration and quality gates
 
-For each daily run I specified: (1) **extract window** — calendar date in UTC with documented handling for late-arriving files; (2) **load semantics** — merge versus append per table, with deduplication keys where at-least-once delivery could duplicate rows; (3) **reconciliation** — compare source object counts to loaded rows within tolerance before publishing curated tables; (4) **schema discipline** — new fields could appear, but type regressions blocked promotion to curated until migrated.
+For each daily run I specified: (1) **extract window** - calendar date in UTC with documented handling for late-arriving files; (2) **load semantics** - merge versus append per table, with deduplication keys where at-least-once delivery could duplicate rows; (3) **reconciliation** - compare source object counts to loaded rows within tolerance before publishing curated tables; (4) **schema discipline** - new fields could appear, but type regressions blocked promotion to curated until migrated.
 
 This turned “the pipeline broke last night” from a scavenger hunt into a **bounded incident** with clear signals.
 
@@ -119,11 +119,11 @@ I used a simple narrative: **short memory for sensitive detail, long memory for 
 
 I owned the **metric definitions** and documentation so product, data science, and leadership used the same language:
 
-- **DAU / WAU / MAU** — calendar-based activity using a stable pseudo-identifier policy and explicit handling of multi-device users.
-- **Feedback sentiment** — rollups from explicit thumbs and free-text signals (with PII scrubbing rules for text retained short-term only).
-- **Provider latency** — **P50 and P95** end-to-end and by segment (region, platform) to separate infrastructure issues from model quality issues.
-- **Intent distribution** — classification buckets where the assistant exposed them; “unknown” explicitly tracked so we did not fake precision.
-- **Platform split** — mobile vs desktop vs embedded surfaces to explain adoption skew.
+- **DAU / WAU / MAU** - calendar-based activity using a stable pseudo-identifier policy and explicit handling of multi-device users.
+- **Feedback sentiment** - rollups from explicit thumbs and free-text signals (with PII scrubbing rules for text retained short-term only).
+- **Provider latency** - **P50 and P95** end-to-end and by segment (region, platform) to separate infrastructure issues from model quality issues.
+- **Intent distribution** - classification buckets where the assistant exposed them; “unknown” explicitly tracked so we did not fake precision.
+- **Platform split** - mobile vs desktop vs embedded surfaces to explain adoption skew.
 
 Each metric had a **single owner**, a SQL or pipeline definition, and a plain-English “why this matters” note for non-technical readers.
 
@@ -167,7 +167,7 @@ I partnered with security and IT to ensure:
 
 - **Default-deny** access to raw assistant payloads for broad analyst groups.
 - **Break-glass** process documented for incidents requiring deeper inspection, with time-bounded elevation.
-- **Dashboard certification** — executive-facing views only referenced curated datasets, not staging.
+- **Dashboard certification** - executive-facing views only referenced curated datasets, not staging.
 
 ---
 
@@ -191,7 +191,7 @@ Engineering began requesting **schema review** before large client releases beca
 
 3. **Provider and latency visibility** matter as much as “how many questions.” Without P50/P95 and platform splits, teams argued about model quality when the bottleneck was often network or regional routing.
 
-4. **Executive trust requires definitional discipline.** I spent significant time aligning on DAU rules and “what counts as a session” — that alignment paid off every time someone screenshotted a dashboard in a leadership meeting.
+4. **Executive trust requires definitional discipline.** I spent significant time aligning on DAU rules and “what counts as a session” - that alignment paid off every time someone screenshotted a dashboard in a leadership meeting.
 
 5. **Cost follows query patterns.** I pushed heavy aggregation into the curated layer so BI tools queried smaller, partition-pruned tables instead of scanning wide raw history.
 
@@ -213,7 +213,7 @@ Object storage in **AWS S3** for upstream landing, cross-environment staging com
 
 ## Closing
 
-This engagement was as much about **stakeholder alignment and governance** as it was about pipelines. The outcome was a platform that could absorb new assistant capabilities without breaking reporting — and a metric catalog that survived the first year of rapid iteration.
+This engagement was as much about **stakeholder alignment and governance** as it was about pipelines. The outcome was a platform that could absorb new assistant capabilities without breaking reporting - and a metric catalog that survived the first year of rapid iteration.
 
 If you are hiring for a role that spans **data platform ownership**, **privacy-aware analytics**, and **fast-moving product telemetry**, this project is representative of how I operate: clarify definitions first, automate quality second, and treat governance as a product for your internal customers.
 
