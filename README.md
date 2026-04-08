@@ -18,6 +18,7 @@ End-to-end project documentation showcasing production-grade data systems built 
 | 6 | [Privacy Compliance ETL](./06-privacy-compliance-etl.md) | Regulatory Compliance | GCP, BigQuery, PySpark |
 | 7 | [Agentic AI Data Engineering PoC](./07-agentic-ai-data-engineering.md) | AI/ML Innovation | GenAI, GCP, Snowflake |
 | 8 | [Data Observability System](./08-data-observability-system.md) | Reliability & SRE | GCP, BigQuery, Airflow |
+| 10 | [Real-Time Billing Reconciliation Tool](./10-billing-reconciliation-tool.md) | Billing Reconciliation | BigQuery, Streamlit, Python, Agentic AI |
 
 ---
 
